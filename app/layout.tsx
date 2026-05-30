@@ -17,21 +17,20 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Annebilla — Ilmu Komunikasi | Portfolio",
+  title: "Annebilla Nasywa | Public Relations & Media Social Specialist",
   description:
-    "Portfolio Annebilla — mahasiswa Ilmu Komunikasi yang berpengalaman di bidang jurnalistik, public relations, konten kreatif, dan media sosial.",
+    "Portfolio Annebilla Nasywa — mahasiswa Ilmu Komunikasi yang berpengalaman di bidang public relations, konten kreatif, dan media sosial.",
   keywords: [
     "ilmu komunikasi",
-    "jurnalistik",
     "public relations",
     "konten kreatif",
     "portfolio",
     "mahasiswa komunikasi",
   ],
   openGraph: {
-    title: "Annebilla — Portofolio Ilmu Komunikasi",
+    title: "Annebilla Nasywa | Public Relations & Media Social Specialist",
     description:
-      "Menjelajahi dunia komunikasi melalui jurnalistik, PR, dan media kreatif.",
+      "Portfolio Annebilla Nasywa | Public Relations & Media Social Specialist",
     type: "website",
   },
 };
@@ -45,6 +44,7 @@ export default function RootLayout({
     <html
       lang="id"
       className={`${jakarta.variable} ${playfair.variable}`}
+      data-scroll-behavior="smooth"
     >
       <body className="noise">{children}</body>
     </html>

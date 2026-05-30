@@ -16,7 +16,7 @@ const experiences = [
     role: "Junior Content Specialist Intern",
     org: "Departement Kehumasan UMS",
     type: "Magang",
-    typeColor: "#7bc9a0",
+    typeColor: "#b48ec6",
     desc: "Bertanggung jawab atas publikasi digital dan materi komunikasi strategis untuk internal dan eksternal Universitas Muhammadiyah Surakarta.",
   },
   {
@@ -24,7 +24,7 @@ const experiences = [
     role: "Anggota Divisi Acara Awarding",
     org: "ComFeast 2025, Universitas Muhammadiyah Surakarta",
     type: "Event",
-    typeColor: "#e8a87c",
+    typeColor: "#dba8c4",
     desc: "Merencanakan dan melaksanakan acara Awarding, termasuk manajemen venue, dekorasi, dan koordinasi dengan pemenang serta sponsor.",
   },
   {
@@ -43,39 +43,27 @@ const education = {
   period: "2022 - 2026",
   concentration: "Public Relations",
   gpa: "3.72 / 4.00",
-  achievements: [
-    "Beasiswa Prestasi Akademik",
-  ],
+  achievements: ["Beasiswa Prestasi Akademik"],
 };
 
 export default function Experience() {
   const containerVariants: Variants = {
     hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.12,
-      },
-    },
+    visible: { transition: { staggerChildren: 0.12 } },
   };
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, x: -30 },
     visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        type: "spring" as const,
-        stiffness: 80,
-        damping: 15,
-      },
+      opacity: 1, x: 0,
+      transition: { type: "spring" as const, stiffness: 80, damping: 15 },
     },
   };
 
   return (
     <section id="experience" style={{ position: "relative", overflow: "hidden" }}>
       <div className="container">
-        {/* Section Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -89,74 +77,29 @@ export default function Experience() {
           </p>
         </motion.div>
 
-        <div 
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "3rem",
-            alignItems: "start",
-          }}
-          className="exp-grid"
-        >
-          {/* Timeline / Experience List */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "start" }} className="exp-grid">
+          {/* Timeline */}
           <div>
-            <h3 style={{
-              fontSize: "0.8rem",
-              fontWeight: 600,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "var(--text-secondary)",
-              marginBottom: "2rem",
-              fontFamily: "inherit",
-            }}>
+            <h3 style={{ fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-secondary)", marginBottom: "2rem", fontFamily: "inherit" }}>
               Organisasi & Pengalaman
             </h3>
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              className="timeline"
-            >
+            <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="timeline">
               {experiences.map((exp, i) => (
-                <motion.div 
-                  key={i} 
-                  variants={itemVariants}
-                  className="timeline-item"
-                  whileHover={{ x: 6 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                >
+                <motion.div key={i} variants={itemVariants} className="timeline-item" whileHover={{ x: 6 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
                   <div style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.4rem",
+                    display: "inline-flex", alignItems: "center", gap: "0.4rem",
                     padding: "0.2rem 0.7rem",
-                    background: "rgba(201,169,110,0.08)",
+                    background: "rgba(255,110,128,0.06)",
                     border: `1px solid ${exp.typeColor}30`,
-                    borderRadius: "99px",
-                    fontSize: "0.7rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.08em",
-                    color: exp.typeColor,
-                    marginBottom: "0.5rem",
+                    borderRadius: "99px", fontSize: "0.7rem", fontWeight: 600,
+                    letterSpacing: "0.08em", color: exp.typeColor, marginBottom: "0.5rem",
                   }}>
                     {exp.type} · {exp.period}
                   </div>
-                  <h4 style={{
-                    fontSize: "1rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    marginBottom: "0.2rem",
-                    fontFamily: "inherit",
-                  }}>
+                  <h4 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.2rem", fontFamily: "inherit" }}>
                     {exp.role}
                   </h4>
-                  <div style={{
-                    fontSize: "0.85rem",
-                    color: "var(--accent-primary)",
-                    marginBottom: "0.6rem",
-                    fontWeight: 500,
-                  }}>
+                  <div style={{ fontSize: "0.85rem", color: "var(--accent-primary)", marginBottom: "0.6rem", fontWeight: 500 }}>
                     {exp.org}
                   </div>
                   <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
@@ -169,55 +112,31 @@ export default function Experience() {
 
           {/* Education Card & Languages */}
           <div style={{ position: "sticky", top: "6rem" }}>
-            <h3 style={{
-              fontSize: "0.8rem",
-              fontWeight: 600,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "var(--text-secondary)",
-              marginBottom: "2rem",
-              fontFamily: "inherit",
-            }}>
+            <h3 style={{ fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-secondary)", marginBottom: "2rem", fontFamily: "inherit" }}>
               Pendidikan
             </h3>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ type: "spring", stiffness: 80, damping: 15 }}
-              whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(201, 169, 110, 0.12)" }}
-              className="card" 
+              whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(255, 110, 128, 0.1)" }}
+              className="card"
               style={{ padding: "2rem", marginBottom: "1.5rem" }}
             >
               <div style={{
                 width: 48, height: 48,
-                background: "linear-gradient(135deg, var(--accent-primary), var(--accent-rose))",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "1.5rem",
-                marginBottom: "1.5rem",
+                background: "linear-gradient(135deg, var(--accent-primary), var(--accent-lavender))",
+                borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "1.5rem", marginBottom: "1.5rem",
               }}>
                 🎓
               </div>
-              <div style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                marginBottom: "0.4rem",
-              }}>
+              <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.4rem" }}>
                 {education.period}
               </div>
-              <h4 style={{
-                fontSize: "1.25rem",
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                marginBottom: "0.4rem",
-                fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-              }}>
+              <h4 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem", fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>
                 {education.degree}
               </h4>
               <div style={{ color: "var(--accent-primary)", fontWeight: 500, marginBottom: "0.3rem" }}>
@@ -228,14 +147,9 @@ export default function Experience() {
               </div>
 
               <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                padding: "1rem",
-                background: "rgba(201,169,110,0.08)",
-                borderRadius: "0.75rem",
-                border: "1px solid rgba(201,169,110,0.2)",
-                marginBottom: "1.5rem",
+                display: "flex", alignItems: "center", gap: "1rem", padding: "1rem",
+                background: "rgba(255,110,128,0.06)", borderRadius: "0.75rem",
+                border: "1px solid rgba(255,110,128,0.15)", marginBottom: "1.5rem",
               }}>
                 <span style={{ fontSize: "1.5rem" }}>⭐</span>
                 <div>
@@ -247,13 +161,7 @@ export default function Experience() {
               </div>
 
               <div>
-                <div style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-muted)",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  marginBottom: "0.75rem",
-                }}>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.75rem" }}>
                   Pencapaian
                 </div>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
@@ -268,23 +176,15 @@ export default function Experience() {
             </motion.div>
 
             {/* Languages */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="card" 
+              className="card"
               style={{ padding: "1.5rem" }}
             >
-              <h4 style={{
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-                marginBottom: "1rem",
-                fontFamily: "inherit",
-              }}>
+              <h4 style={{ fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "1rem", fontFamily: "inherit" }}>
                 Bahasa
               </h4>
               {[
@@ -296,22 +196,13 @@ export default function Experience() {
                     <span style={{ fontSize: "0.85rem", color: "var(--text-primary)", fontWeight: 500 }}>{l.lang}</span>
                     <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{l.level}</span>
                   </div>
-                  <div style={{
-                    height: 4,
-                    background: "rgba(255,255,255,0.06)",
-                    borderRadius: 99,
-                    overflow: "hidden",
-                  }}>
-                    <motion.div 
+                  <div style={{ height: 4, background: "rgba(0,0,0,0.06)", borderRadius: 99, overflow: "hidden" }}>
+                    <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${l.pct}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-                      style={{
-                        height: "100%",
-                        background: "linear-gradient(to right, var(--accent-primary), var(--accent-rose))",
-                        borderRadius: 99,
-                      }} 
+                      style={{ height: "100%", background: "linear-gradient(to right, var(--accent-primary), var(--accent-lavender))", borderRadius: 99 }}
                     />
                   </div>
                 </div>

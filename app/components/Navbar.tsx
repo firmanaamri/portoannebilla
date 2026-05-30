@@ -41,7 +41,7 @@ export default function Navbar() {
             letterSpacing: "-0.02em",
           }}
         >
-          annebilla<span style={{ color: "var(--accent-rose)" }}>.</span>
+          annebilla<span style={{ color: "var(--accent-lavender)" }}>.</span>
         </a>
 
         {/* Desktop Links */}
@@ -92,66 +92,29 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Full Screen Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay — slides in below the navbar */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
             style={{
               position: "fixed",
-              inset: 0,
+              top: "72px",
+              left: 0,
+              right: 0,
+              bottom: 0,
               width: "100vw",
-              height: "100dvh",
-              background: "rgba(13, 13, 18, 0.99)",
+              background: "rgba(255, 214, 145, 0.98)",
               backdropFilter: "blur(24px)",
-              zIndex: 9999,
+              zIndex: 99,
               display: "flex",
               flexDirection: "column",
               padding: "2rem",
             }}
           >
-            {/* Overlay Header */}
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              marginBottom: "3rem",
-            }}>
-              <a
-                href="#hero"
-                onClick={(e) => { e.preventDefault(); handleNav("#hero"); }}
-                style={{
-                  fontSize: "1.3rem",
-                  fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-                  fontWeight: 700,
-                  color: "var(--accent-primary)",
-                  textDecoration: "none",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                annebilla<span style={{ color: "var(--accent-rose)" }}>.</span>
-              </a>
-              <button
-                onClick={() => setMenuOpen(false)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  color: "var(--text-primary)",
-                  padding: "0.25rem",
-                }}
-                aria-label="Close menu"
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
             {/* Centered Large Navigation Links */}
             <div style={{
               display: "flex",
@@ -185,7 +148,7 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Bottom Signature info */}
+            {/* Bottom email */}
             <div style={{
               textAlign: "center",
               marginTop: "auto",
@@ -202,7 +165,7 @@ export default function Navbar() {
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .btn-primary { display: none !important; }
+          .navbar .btn-primary { display: none !important; }
           #hamburger-btn { display: block !important; }
         }
       `}</style>

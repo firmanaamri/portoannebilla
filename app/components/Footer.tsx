@@ -20,7 +20,7 @@ export default function Footer() {
           fontWeight: 700,
           color: "var(--accent-primary)",
         }}>
-          annebilla<span style={{ color: "var(--accent-rose)" }}>.</span>
+          annebilla<span style={{ color: "var(--accent-lavender)" }}>.</span>
         </div>
 
         <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>

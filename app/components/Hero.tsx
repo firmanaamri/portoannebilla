@@ -4,17 +4,11 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 
-export default function Hero() {
-  const words = [
-    "Public Relations",
-    "Digital Konten Kreator",
-    "Media Social Specialist",
-  ];
+function TypewriterText({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
 
-  // Typewriter effect logic
   useEffect(() => {
     if (subIndex === words[index].length + 1 && !reverse) {
       const timeout = setTimeout(() => setReverse(true), 2200);
@@ -35,7 +29,41 @@ export default function Hero() {
     );
 
     return () => clearTimeout(timeout);
-  }, [subIndex, reverse, index]);
+  }, [subIndex, reverse, index, words]);
+
+  return (
+    <>
+      <span style={{ textShadow: "0 0 20px rgba(255, 110, 128, 0.12)" }}>
+        {words[index].substring(0, subIndex)}
+      </span>
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{
+          repeat: Infinity,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        style={{
+          display: "inline-block",
+          width: "3px",
+          height: "1.1em",
+          background: "var(--accent-rose)",
+          marginLeft: "2px",
+          borderRadius: "2px",
+          boxShadow: "0 0 8px var(--accent-rose)",
+        }}
+      />
+    </>
+  );
+}
+
+export default function Hero() {
+  const words = [
+    "Public Relations",
+    "Digital Konten Kreator",
+    "Media Social Specialist",
+  ];
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -77,13 +105,13 @@ export default function Hero() {
 
   const buttonHover = {
     scale: 1.05,
-    boxShadow: "0 8px 30px rgba(201, 169, 110, 0.4)",
+    boxShadow: "0 8px 30px rgba(255, 110, 128, 0.3)",
     transition: { type: "spring" as const, stiffness: 400, damping: 10 },
   };
 
   const outlineHover = {
     scale: 1.05,
-    backgroundColor: "rgba(201, 169, 110, 0.08)",
+    backgroundColor: "rgba(255, 110, 128, 0.06)",
     borderColor: "var(--accent-primary)",
     transition: { type: "spring" as const, stiffness: 400, damping: 10 },
   };
@@ -134,7 +162,7 @@ export default function Hero() {
               }}
             >
               Halo, saya&nbsp;
-              <span className="highlight">Annebilla</span>
+              <span className="highlight" style={{ fontSize: "0.75em" }}> Annebilla Nasywa</span>
             </motion.h1>
 
             {/* Tulisan bergerak (Typewriter role subtitle) */}
@@ -153,39 +181,19 @@ export default function Hero() {
                 minHeight: "2.25rem",
               }}
             >
-              <span
-                style={{ textShadow: "0 0 20px rgba(201, 169, 110, 0.15)" }}
-              >
-                {words[index].substring(0, subIndex)}
-              </span>
-              <motion.span
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 0.8,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  display: "inline-block",
-                  width: "3px",
-                  height: "1.1em",
-                  background: "var(--accent-rose)",
-                  marginLeft: "2px",
-                  borderRadius: "2px",
-                  boxShadow: "0 0 8px var(--accent-rose)",
-                }}
-              />
+              <TypewriterText words={words} />
             </motion.div>
-            <motion.p variants={itemVariants} className="hero-desc">
+            <motion.p variants={itemVariants} className="hero-desc" style={{ textAlign: "justify" }} >
               Passionate di bidang{" "}
-              
+
               {" "}
               <strong style={{ color: "var(--text-primary)" }}>
                 public relations
               </strong>
+              {" "}
               dan{" "}
               <strong style={{ color: "var(--text-primary)" }}>
-                konten kreatif
+              konten kreatif
               </strong>
               . Saya percaya komunikasi yang baik mampu mengubah cara pandang
               dan menggerakkan dunia.
@@ -193,12 +201,13 @@ export default function Hero() {
 
             <motion.div
               variants={itemVariants}
-              style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
+              className="hero-cta-group"
+              style={{ display: "flex", gap: "1rem" }}
             >
               <motion.a
                 id="hero-cta-portfolio"
                 href="#portfolio"
-                className="btn-primary"
+                className="btn-primary hero-cta-btn"
                 whileHover={buttonHover}
                 whileTap={{ scale: 0.98 }}
                 onClick={(e) => {
@@ -227,7 +236,7 @@ export default function Hero() {
               <motion.a
                 id="hero-cta-contact"
                 href="#contact"
-                className="btn-outline"
+                className="btn-outline hero-cta-btn"
                 whileHover={outlineHover}
                 whileTap={{ scale: 0.98 }}
                 onClick={(e) => {
@@ -245,6 +254,7 @@ export default function Hero() {
           {/* Right — Profile Image with custom motion tilt & spring entrance */}
           <motion.div
             variants={profileVariants}
+            className="hero-profile"
             style={{
               display: "flex",
               flexDirection: "column",

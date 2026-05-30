@@ -6,37 +6,14 @@ import { motion, Variants } from "framer-motion";
 export default function About() {
   const containerVariants: Variants = {
     hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
+    visible: { transition: { staggerChildren: 0.12 } },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring" as const,
-        stiffness: 80,
-        damping: 15,
-      },
-    },
-  };
-
-  const photoVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 60,
-        damping: 15,
-        delay: 0.2,
-      },
+      opacity: 1, y: 0,
+      transition: { type: "spring" as const, stiffness: 80, damping: 15 },
     },
   };
 
@@ -59,192 +36,179 @@ export default function About() {
   ];
 
   return (
-    <section id="about" style={{ position: "relative", overflow: "hidden" }}>
-      <div className="container">
-        <div 
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1.2fr",
-            gap: "4rem",
-            alignItems: "center",
-          }}
-          className="about-grid"
+    <section
+      id="about"
+      className="theme-navy"
+      style={{ position: "relative", overflow: "hidden", padding: 0 }}
+    >
+      {/* ── 2-COLUMN GRID: Text Left | Photo Right ── */}
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "90vh" }}
+        className="about-grid"
+      >
+
+        {/* ── LEFT: Text Content Panel ── (rendered first in DOM but visually left) */}
+
+        {/* ── RIGHT: Photo Panel ── */}
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.1, ease: "easeOut" }}
+          style={{ position: "relative", overflow: "hidden", order: 1 }}
         >
-          {/* Left Column — Gorgeous Portrait Photo Blending with Dark Theme */}
-          <motion.div
-            variants={photoVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+          <Image
+            src="/photo/aww.jpeg"
+            alt="Annebilla Nasywa"
+            fill
+            sizes="50vw"
             style={{
-              position: "relative",
-              justifySelf: "center",
-              width: "100%",
-              maxWidth: "340px",
+              objectFit: "cover",
+              objectPosition: "center top",
+              filter: "brightness(0.95) contrast(1.1) saturate(0.95)",
             }}
-          >
-            {/* Ambient background glow (gold & rose) */}
+          />
+          {/* Left-side fade: photo dissolves into the left column's background */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to left, transparent 40%, rgba(35,58,102,0.6) 70%, #233A66 100%)",
+            pointerEvents: "none",
+          }} />
+          {/* Top fade */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to bottom, #233A66 0%, transparent 18%)",
+            pointerEvents: "none",
+          }} />
+          {/* Bottom fade */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to top, #233A66 0%, transparent 25%)",
+            pointerEvents: "none",
+          }} />
+        </motion.div>
+
+        {/* ── LEFT: Text Content Panel ── */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "1.5rem",
+            padding: "5rem 2rem 5rem 7vw",
+            background: "#233A66",
+          }}
+        >
+          {/* Label — "DISCOVERY — ABOUT" */}
+          <motion.div variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <div style={{
-              position: "absolute",
-              top: "-5%",
-              left: "-5%",
-              width: "110%",
-              height: "110%",
-              background: "radial-gradient(circle, rgba(201, 169, 110, 0.2) 0%, rgba(224, 122, 159, 0.08) 50%, transparent 100%)",
-              filter: "blur(30px)",
-              zIndex: 0,
-              pointerEvents: "none",
+              width: "36px", height: "2px",
+              background: "var(--accent-secondary)", borderRadius: "99px",
             }} />
-
-            {/* Photo container */}
-            <div style={{
-              position: "relative",
-              aspectRatio: "3/4",
-              borderRadius: "24px",
-              overflow: "hidden",
-              border: "1px solid rgba(201, 169, 110, 0.2)",
-              boxShadow: "0 20px 45px rgba(0, 0, 0, 0.6)",
-              zIndex: 1,
-              // Fades the bottom edges perfectly into the deep dark background
-              maskImage: "linear-gradient(to bottom, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%)",
-              WebkitMaskImage: "linear-gradient(to bottom, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%)",
+            <span style={{
+              fontSize: "0.68rem", fontWeight: 700,
+              letterSpacing: "0.2em", textTransform: "uppercase",
+              color: "var(--accent-secondary)",
             }}>
-              <Image
-                src="/my.jpeg" // Menggunakan foto profil yang sama yang sudah teruji keindahannya
-                alt="Tentang Annebilla"
-                fill
-                sizes="(max-width: 768px) 100vw, 340px"
-                priority
+              Discovery — About
+            </span>
+          </motion.div>
+
+          {/* Editorial name heading */}
+          <motion.div variants={itemVariants}>
+            <h2 style={{
+              fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
+              fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
+              fontWeight: 900, lineHeight: 1.05,
+              color: "var(--text-primary)", margin: 0,
+            }}>
+              Annebilla
+            </h2>
+            <h2 style={{
+              fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
+              fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
+              fontWeight: 700, fontStyle: "italic", lineHeight: 1.05,
+              color: "var(--accent-secondary)", margin: "0 0 0.75rem 0",
+            }}>
+              Nasywa.
+            </h2>
+            {/* Role pill */}
+            <span style={{
+              display: "inline-block",
+              padding: "0.3rem 1rem",
+              border: "1px solid rgba(215,168,89,0.3)",
+              borderRadius: "99px",
+              fontSize: "0.68rem", fontWeight: 600,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "var(--text-secondary)",
+            }}>
+              Public Relations / Content Creator
+            </span>
+          </motion.div>
+
+          {/* Divider */}
+          <motion.div variants={itemVariants} style={{
+            width: "100%", height: "1px",
+            background: "rgba(215,168,89,0.12)",
+          }} />
+
+          {/* Bio */}
+          <motion.p variants={itemVariants} style={{
+            color: "var(--text-secondary)", fontSize: "0.93rem",
+            lineHeight: 1.9, textAlign: "justify", margin: 0,
+          }}>
+            Saya <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Annebilla Nasywa</strong>,
+            fresh graduate <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Ilmu Komunikasi</strong>{" "}
+            UMS yang berfokus pada{" "}
+            <strong style={{ color: "var(--accent-secondary)", fontWeight: 600 }}>Public Relations</strong>{" "}
+            dan konten digital. Saya bersemangat memadukan komunikasi strategis dengan kreativitas — dari kehumasan UMS,
+            kepemimpinan IMM, hingga manajemen event seni nasional.
+          </motion.p>
+
+          {/* Core Values — 2-col cards (like reference) */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem" }}>
+            {coreValues.slice(0, 4).map((val) => (
+              <motion.div
+                key={val.title}
+                variants={itemVariants}
                 style={{
-                  objectFit: "cover",
-                  // Muted luxury grading to blend perfectly with dark gold-rose theme
-                  filter: "brightness(0.75) contrast(1.1) saturate(0.65) sepia(0.2)",
+                  padding: "1.1rem",
+                  borderRadius: "14px",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(215,168,89,0.1)",
+                  cursor: "default",
+                  transition: "border-color 0.2s, background 0.2s",
                 }}
-              />
-
-              {/* Gold/Rose color matching tint overlay */}
-              <div style={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(to bottom, rgba(201, 169, 110, 0.1) 0%, rgba(224, 122, 159, 0.05) 50%, rgba(13, 13, 18, 0.8) 100%)",
-                pointerEvents: "none",
-                mixBlendMode: "screen",
-              }} />
-            </div>
-
-            {/* Tiny accent gold dot badge */}
-            <div style={{
-              position: "absolute",
-              bottom: "10%",
-              right: "-15px",
-              background: "linear-gradient(135deg, var(--accent-primary), var(--accent-rose))",
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 8px 20px rgba(201, 169, 110, 0.3)",
-              zIndex: 2,
-              fontSize: "1.2rem",
-            }}>
-              ✨
-            </div>
-          </motion.div>
-
-          {/* Right Column — Professional Profile Bio */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.div variants={itemVariants}>
-              <div className="section-label">Tentang Saya</div>
-              <h2 className="section-title" style={{ marginBottom: "1.5rem" }}>
-                Menghubungkan Visi Melalui Komunikasi Kreatif
-              </h2>
-            </motion.div>
-
-            <motion.p 
-              variants={itemVariants} 
-              style={{
-                color: "var(--text-secondary)",
-                fontSize: "1rem",
-                lineHeight: 1.8,
-                marginBottom: "1.5rem",
-              }}
-            >
-              Halo! Saya adalah mahasiswi semester akhir jurusan <strong style={{ color: "var(--text-primary)" }}>Ilmu Komunikasi</strong> di <strong style={{ color: "var(--text-primary)" }}>Universitas Muhammadiyah Surakarta</strong>, dengan fokus pendalaman di bidang <strong style={{ color: "var(--text-primary)" }}>Public Relations (Hubungan Masyarakat)</strong>.
-            </motion.p>
-
-            <motion.p 
-              variants={itemVariants} 
-              style={{
-                color: "var(--text-secondary)",
-                fontSize: "0.95rem",
-                lineHeight: 1.8,
-                marginBottom: "2rem",
-              }}
-            >
-              Sebagai calon praktisi PR dan penggiat media digital, saya sangat bersemangat dalam memadukan keahlian komunikasi publik dengan kreativitas pembuatan konten digital. Melalui pengalaman saya di kehumasan internal UMS, kegiatan kepemimpinan IMM, serta manajemen event seni nasional, saya selalu bertekad menciptakan impresi yang bermakna bagi setiap audiens.
-            </motion.p>
-
-            {/* Core Pillars / Core Values list */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              {coreValues.map((val, idx) => (
-                <motion.div
-                  key={val.title}
-                  variants={itemVariants}
-                  style={{
-                    display: "flex",
-                    gap: "1.25rem",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <div style={{
-                    width: "44px",
-                    height: "44px",
-                    borderRadius: "10px",
-                    background: "rgba(201, 169, 110, 0.08)",
-                    border: "1px solid rgba(201, 169, 110, 0.2)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "1.2rem",
-                    flexShrink: 0,
-                  }}>
-                    {val.icon}
-                  </div>
-                  <div>
-                    <h4 style={{
-                      fontSize: "1rem",
-                      fontWeight: 700,
-                      color: "var(--text-primary)",
-                      marginBottom: "0.25rem",
-                    }}>
-                      {val.title}
-                    </h4>
-                    <p style={{
-                      fontSize: "0.85rem",
-                      color: "var(--text-secondary)",
-                      lineHeight: 1.6,
-                    }}>
-                      {val.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+                whileHover={{
+                  backgroundColor: "rgba(215,168,89,0.06)",
+                  borderColor: "rgba(215,168,89,0.3)",
+                }}
+              >
+                <div style={{ fontSize: "1.3rem", marginBottom: "0.5rem" }}>{val.icon}</div>
+                <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.3rem" }}>
+                  {val.title}
+                </h4>
+                <p style={{ fontSize: "0.72rem", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0, opacity: 0.85 }}>
+                  {val.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
       <style>{`
         @media (max-width: 768px) {
           .about-grid {
             grid-template-columns: 1fr !important;
-            gap: 3rem !important;
+            min-height: unset !important;
+          }
+          .about-grid > div:first-child {
+            min-height: 55vw;
           }
         }
       `}</style>
