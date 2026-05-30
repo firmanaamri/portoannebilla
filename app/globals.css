@@ -485,6 +485,11 @@ section {
   white-space: nowrap;
 }
 
+/* ─── Hamburger Mobile Button ───────────────────── */
+.hamburger-mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
   section { padding: 4rem 0; }
   .profile-ring { width: 260px; height: 260px; }
@@ -499,6 +504,7 @@ section {
     justify-content: center;
     margin: 0 auto;
   }
+  .hamburger-mobile { display: flex; }
 }
 
 @media (max-width: 480px) {

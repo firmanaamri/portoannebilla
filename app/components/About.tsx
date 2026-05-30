@@ -41,53 +41,10 @@ export default function About() {
       className="theme-navy"
       style={{ position: "relative", overflow: "hidden", padding: 0 }}
     >
-      {/* ── 2-COLUMN GRID: Text Left | Photo Right ── */}
       <div
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "90vh" }}
         className="about-grid"
       >
-
-        {/* ── LEFT: Text Content Panel ── (rendered first in DOM but visually left) */}
-
-        {/* ── RIGHT: Photo Panel ── */}
-        <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.1, ease: "easeOut" }}
-          style={{ position: "relative", overflow: "hidden", order: 1 }}
-        >
-          <Image
-            src="/photo/aww.jpeg"
-            alt="Annebilla Nasywa"
-            fill
-            sizes="50vw"
-            style={{
-              objectFit: "cover",
-              objectPosition: "center top",
-              filter: "brightness(0.95) contrast(1.1) saturate(0.95)",
-            }}
-          />
-          {/* Left-side fade: photo dissolves into the left column's background */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(to left, transparent 40%, rgba(35,58,102,0.6) 70%, #233A66 100%)",
-            pointerEvents: "none",
-          }} />
-          {/* Top fade */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(to bottom, #233A66 0%, transparent 18%)",
-            pointerEvents: "none",
-          }} />
-          {/* Bottom fade */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(to top, #233A66 0%, transparent 25%)",
-            pointerEvents: "none",
-          }} />
-        </motion.div>
-
         {/* ── LEFT: Text Content Panel ── */}
         <motion.div
           variants={containerVariants}
@@ -103,7 +60,7 @@ export default function About() {
             background: "#233A66",
           }}
         >
-          {/* Label — "DISCOVERY — ABOUT" */}
+          {/* Label */}
           <motion.div variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <div style={{
               width: "36px", height: "2px",
@@ -118,7 +75,7 @@ export default function About() {
             </span>
           </motion.div>
 
-          {/* Editorial name heading */}
+          {/* Name heading */}
           <motion.div variants={itemVariants}>
             <h2 style={{
               fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
@@ -136,7 +93,6 @@ export default function About() {
             }}>
               Nasywa.
             </h2>
-            {/* Role pill */}
             <span style={{
               display: "inline-block",
               padding: "0.3rem 1rem",
@@ -169,9 +125,9 @@ export default function About() {
             kepemimpinan IMM, hingga manajemen event seni nasional.
           </motion.p>
 
-          {/* Core Values — 2-col cards (like reference) */}
+          {/* Core Values */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem" }}>
-            {coreValues.slice(0, 4).map((val) => (
+            {coreValues.map((val, i) => (
               <motion.div
                 key={val.title}
                 variants={itemVariants}
@@ -182,6 +138,9 @@ export default function About() {
                   border: "1px solid rgba(215,168,89,0.1)",
                   cursor: "default",
                   transition: "border-color 0.2s, background 0.2s",
+                  ...(coreValues.length % 2 !== 0 && i === coreValues.length - 1
+                    ? { gridColumn: "1 / -1" }
+                    : {}),
                 }}
                 whileHover={{
                   backgroundColor: "rgba(215,168,89,0.06)",
@@ -199,16 +158,112 @@ export default function About() {
             ))}
           </div>
         </motion.div>
+
+        {/* ── RIGHT: Photo Panel ── */}
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.1, ease: "easeOut" }}
+          className="about-photo"
+          style={{ position: "relative", overflow: "hidden" }}
+        >
+          {/* 
+            Di desktop: pakai next/image fill (parent relative, overflow hidden, tinggi dari grid).
+            Di mobile: pakai <img> biasa dengan width 100% agar foto tampil full tanpa terpotong.
+          */}
+
+          {/* Desktop image — hidden di mobile via CSS */}
+          <div className="photo-desktop" style={{ position: "absolute", inset: 0 }}>
+            <Image
+              src="/photo/aww.jpeg"
+              alt="Annebilla Nasywa"
+              fill
+              sizes="50vw"
+              style={{
+                objectFit: "cover",
+                objectPosition: "center top",
+                filter: "brightness(0.95) contrast(1.1) saturate(0.95)",
+              }}
+            />
+          </div>
+
+          {/* Mobile image — hidden di desktop via CSS, tampil full */}
+          <div className="photo-mobile">
+            <img
+              src="/photo/aww.jpeg"
+              alt="Annebilla Nasywa"
+              style={{
+                width: "100%",
+                height: "auto",
+                display: "block",
+                objectFit: "contain",
+                filter: "brightness(0.95) contrast(1.1) saturate(0.95)",
+              }}
+            />
+          </div>
+
+          {/* Overlay gradients — desktop only */}
+          <div className="photo-desktop" style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to left, transparent 40%, rgba(35,58,102,0.6) 70%, #233A66 100%)",
+            pointerEvents: "none",
+          }} />
+          <div className="photo-desktop" style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to bottom, #233A66 0%, transparent 18%)",
+            pointerEvents: "none",
+          }} />
+          <div className="photo-desktop" style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to top, #233A66 0%, transparent 25%)",
+            pointerEvents: "none",
+          }} />
+
+          {/* Mobile: gradient tipis di bawah supaya transisi ke teks halus */}
+          <div className="photo-mobile-overlay" style={{
+            position: "absolute", bottom: 0, left: 0, right: 0,
+            height: "60px",
+            background: "linear-gradient(to top, #233A66 0%, transparent 100%)",
+            pointerEvents: "none",
+          }} />
+        </motion.div>
       </div>
 
       <style>{`
+        /* ── Desktop default ── */
+        .photo-mobile { display: none; }
+        .photo-mobile-overlay { display: none; }
+        .photo-desktop { display: block; }
+
+        /* ── Mobile ── */
         @media (max-width: 768px) {
           .about-grid {
             grid-template-columns: 1fr !important;
             min-height: unset !important;
           }
-          .about-grid > div:first-child {
-            min-height: 55vw;
+
+          /* Foto di atas teks */
+          .about-photo {
+            order: -1;
+            /* Hapus position relative + overflow hidden agar img bisa tampil full */
+            position: static !important;
+            overflow: visible !important;
+            background: #233A66;
+          }
+
+          /* Sembunyikan versi desktop */
+          .photo-desktop { display: none !important; }
+
+          /* Tampilkan versi mobile */
+          .photo-mobile {
+            display: block;
+            width: 100%;
+          }
+
+          .photo-mobile-overlay {
+            display: block;
+            position: sticky; /* tetap di bawah gambar */
           }
         }
       `}</style>
