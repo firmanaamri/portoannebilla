@@ -140,40 +140,39 @@ export default function Hero() {
             <motion.div variants={itemVariants} className="hero-tag">
               <span
                 style={{
-                  width: 8,
-                  height: 8,
+                  width: 6,
+                  height: 6,
                   borderRadius: "50%",
                   background: "var(--accent-rose)",
                   display: "inline-block",
-                  marginRight: 8,
+                  marginRight: 4,
                 }}
               />
-              Fresh Graduate Communication Science
+              Available for Work
             </motion.div>
 
             <motion.h1
               variants={itemVariants}
               className="hero-title"
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
+                paddingBottom: "0.15em",
                 marginBottom: "0.5rem",
               }}
             >
-              Halo, saya&nbsp;
-              <span className="highlight" style={{ fontSize: "0.75em" }}> Annebilla Nasywa</span>
+              <span className="name-gradient" style={{ lineHeight: 1.15, paddingBottom: "0.12em", fontWeight: 800 }}>Annebilla </span>
+              <span style={{ lineHeight: 1.15, paddingBottom: "0.12em", fontWeight: 800, color: "#D64B68" }}>Nasywa</span> <br />
+              <span className="name-gradient" style={{ lineHeight: 1.15, paddingBottom: "0.12em", fontWeight: 800 }}>Hamimmah</span>
             </motion.h1>
 
             {/* Tulisan bergerak (Typewriter role subtitle) */}
             <motion.div
               variants={itemVariants}
               style={{
-                fontSize: "1.5rem",
+                fontSize: "1.3rem",
                 fontWeight: 600,
                 color: "var(--accent-primary)",
-                fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-                letterSpacing: "0.04em",
+                fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans', sans-serif)",
+                letterSpacing: "0.01em",
                 marginBottom: "1.5rem",
                 display: "flex",
                 alignItems: "center",
@@ -181,7 +180,7 @@ export default function Hero() {
                 minHeight: "2.25rem",
               }}
             >
-              <TypewriterText words={words} />
+              <span style={{ color: "var(--text-primary)", opacity: 0.7 }}>I&apos;m a </span><TypewriterText words={words} />
             </motion.div>
             <motion.p variants={itemVariants} className="hero-desc" style={{ textAlign: "justify" }} >
               Passionate di bidang{" "}

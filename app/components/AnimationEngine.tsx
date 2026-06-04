@@ -63,18 +63,31 @@ export default function AnimationEngine() {
     observer.observe(document.body, { childList: true, subtree: true });
 
     /* ── 2. SCROLL PROGRESS BAR ───────────────────────── */
-    const progressBar = document.createElement("div");
-    progressBar.id = "js-scroll-progress";
-    document.body.appendChild(progressBar);
+    const progressBar = document.getElementById("js-scroll-progress");
+    let scrollTarget = 0;
+    let scrollCurrent = 0;
+    let scrollRafId: number;
 
     const onScroll = () => {
       const scrolled = window.scrollY;
       const total    = document.body.scrollHeight - window.innerHeight;
       if (total > 0) {
-        progressBar.style.width = `${(scrolled / total) * 100}%`;
+        scrollTarget = scrolled / total;
       }
     };
 
+    const animateProgress = () => {
+      scrollCurrent += (scrollTarget - scrollCurrent) * 0.08;
+      if (Math.abs(scrollCurrent - scrollTarget) < 0.001) {
+        scrollCurrent = scrollTarget;
+      }
+      if (progressBar) {
+        progressBar.style.transform = `scaleX(${scrollCurrent})`;
+      }
+      scrollRafId = requestAnimationFrame(animateProgress);
+    };
+
+    scrollRafId = requestAnimationFrame(animateProgress);
     window.addEventListener("scroll", onScroll, { passive: true });
 
     /* ── 3. PARALLAX DEPTH BACKGROUND ORBS ────────────── */
@@ -133,13 +146,13 @@ export default function AnimationEngine() {
     /* ── CLEANUP ──────────────────────────────────────── */
     return () => {
       cancelAnimationFrame(rafId);
+      cancelAnimationFrame(scrollRafId);
       document.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousemove", onParallax);
       window.removeEventListener("scroll", onScroll);
       observer.disconnect();
       counterObserver.disconnect();
       cursor.remove();
-      progressBar.remove();
     };
   }, []);
 

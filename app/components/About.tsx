@@ -179,6 +179,7 @@ export default function About() {
               src="/photo/aww.jpeg"
               alt="Annebilla Nasywa"
               fill
+              priority
               sizes="50vw"
               style={{
                 objectFit: "cover",
@@ -193,6 +194,7 @@ export default function About() {
             <img
               src="/photo/aww.jpeg"
               alt="Annebilla Nasywa"
+              loading="eager"
               style={{
                 width: "100%",
                 height: "auto",

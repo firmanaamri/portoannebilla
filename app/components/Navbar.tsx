@@ -1,9 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { link } from "fs";
 
-const links = [  
+const links = [
   { label: "Tentang", href: "#about" },
   { label: "Keahlian", href: "#skills" },
   { label: "Portofolio", href: "#portfolio" },
@@ -21,65 +20,106 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Kunci body scroll saat menu terbuka
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   const handleNav = (href: string) => {
     setMenuOpen(false);
     setTimeout(() => {
       document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-    }, 300); // tunggu animasi close selesai
+    }, 300);
   };
+
+  // Logika penentu tema: akan gelap JIKA di-scroll ATAU menu mobile terbuka
+  const isDarkTheme = scrolled || menuOpen;
+  
+  // Variabel warna dinamis
+  const logoColor = isDarkTheme ? "#ffffff" : "var(--text-primary, #233a66)";
+  const linkColor = isDarkTheme ? "rgba(255, 255, 255, 0.85)" : "var(--text-primary, #233a66)";
+  const linkHoverColor = isDarkTheme ? "#ffffff" : "var(--accent-primary, #ff6e80)";
+  const hamburgerColor = isDarkTheme ? "#ffffff" : "var(--text-primary, #233a66)";
 
   return (
     <>
-      {/* ── Navbar selalu di atas overlay (z: 300) ── */}
       <nav
         className={`navbar ${scrolled ? "scrolled" : ""}`}
         style={{
-          zIndex: 300,           // ← dinaikkan di atas overlay
-          background: menuOpen ? "var(--bg-primary)" : undefined,
-          borderBottom: menuOpen ? "1px solid var(--border-subtle)" : undefined,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 300,
+          transition: "all 0.4s ease",
+          // Jika belum di-scroll, background transparan. Jika di-scroll, kaca gelap.
+          backgroundColor: isDarkTheme ? "rgba(15, 23, 42, 0.85)" : "transparent",
+          // Hilangkan blur jika di atas agar menyatu dengan background krem
+          backdropFilter: isDarkTheme ? "blur(16px)" : "none",
+          WebkitBackdropFilter: isDarkTheme ? "blur(16px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid transparent",
         }}
       >
-        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: scrolled ? "0.85rem 2rem" : "1.25rem 2rem",
+            transition: "padding 0.4s ease"
+          }}
+        >
           {/* Logo */}
           <a
             href="#hero"
-            onClick={(e) => { e.preventDefault(); handleNav("#hero"); }}
+            onClick={(e) => {
+              e.preventDefault();
+              handleNav("#hero");
+            }}
             style={{
               fontSize: "1.3rem",
               fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
               fontWeight: 700,
-              color: "var(--accent-primary)",
+              color: logoColor, // Warna dinamis
               textDecoration: "none",
               letterSpacing: "-0.02em",
+              transition: "color 0.4s ease",
             }}
           >
-            annebilla<span style={{ color: "var(--accent-lavender)" }}>.</span>
+            annebilla<span style={{ color: "var(--accent-primary, #ff6e80)" }}>.</span>
           </a>
 
           {/* Desktop Links */}
-          <div className="desktop-nav" style={{ display: "flex", gap: "2.5rem" }}>
-            {links.slice(1).map((link) => (   // skip "Beranda" di desktop
+          <div
+            className="desktop-nav"
+            style={{ display: "flex", gap: "2.5rem", marginLeft: "auto" }}
+          >
+            {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 className="nav-link"
-                onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
+                style={{
+                  color: linkColor, // Warna dinamis
+                  fontWeight: 500,
+                  fontSize: "0.9rem",
+                  textDecoration: "none",
+                  transition: "color 0.3s ease"
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNav(link.href);
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = linkHoverColor)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = linkColor)}
               >
                 {link.label}
               </a>
             ))}
           </div>
-
-          {/* CTA */}
-          <a href="#contact" className="btn-primary" onClick={(e) => { e.preventDefault(); handleNav("#contact"); }} style={{ padding: "0.6rem 1.4rem", fontSize: "0.82rem" }}>
-            Hubungi Saya
-          </a>
 
           {/* Mobile Hamburger → ✕ */}
           <button
@@ -94,50 +134,69 @@ export default function Navbar() {
               width: "40px",
               height: "40px",
               gap: "5px",
-              background: menuOpen ? "rgba(255,110,128,0.1)" : "rgba(0,0,0,0.05)",
-              border: `1px solid ${menuOpen ? "var(--accent-primary)" : "var(--border-subtle)"}`,
+              background: menuOpen
+                ? "rgba(255, 255, 255, 0.1)"
+                : (scrolled ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"),
+              border: `1px solid ${isDarkTheme ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"}`,
               borderRadius: "10px",
               cursor: "pointer",
-              transition: "background 0.2s ease, border-color 0.2s ease",
+              transition: "all 0.3s ease",
               position: "relative",
-              zIndex: 301,        // ← pastikan tombol selalu klikable
+              zIndex: 301,
             }}
           >
-            <span style={{
-              display: "block",
-              height: "1.5px",
-              width: menuOpen ? "16px" : "18px",
-              background: "var(--text-primary)",
-              borderRadius: "2px",
-              transformOrigin: "center",
-              transform: menuOpen ? "translateY(6.5px) rotate(45deg)" : "none",
-              transition: "transform 0.3s ease, width 0.3s ease",
-            }} />
-            <span style={{
-              display: "block",
-              height: "1.5px",
-              width: "14px",
-              background: "var(--text-primary)",
-              borderRadius: "2px",
-              opacity: menuOpen ? 0 : 1,
-              transform: menuOpen ? "scaleX(0)" : "scaleX(1)",
-              transition: "opacity 0.3s ease, transform 0.3s ease",
-            }} />
-            <span style={{
-              display: "block",
-              height: "1.5px",
-              width: menuOpen ? "16px" : "10px",
-              background: "var(--text-primary)",
-              borderRadius: "2px",
-              transformOrigin: "center",
-              transform: menuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none",
-              transition: "transform 0.3s ease, width 0.3s ease",
-            }} />
+            <span
+              style={{
+                display: "block",
+                height: "1.5px",
+                width: menuOpen ? "16px" : "18px",
+                background: hamburgerColor, // Warna dinamis
+                borderRadius: "2px",
+                transformOrigin: "center",
+                transform: menuOpen ? "translateY(6.5px) rotate(45deg)" : "none",
+                transition: "transform 0.3s ease, width 0.3s ease, background 0.3s ease",
+              }}
+            />
+            <span
+              style={{
+                display: "block",
+                height: "1.5px",
+                width: "14px",
+                background: hamburgerColor, // Warna dinamis
+                borderRadius: "2px",
+                opacity: menuOpen ? 0 : 1,
+                transform: menuOpen ? "scaleX(0)" : "scaleX(1)",
+                transition: "opacity 0.3s ease, transform 0.3s ease, background 0.3s ease",
+              }}
+            />
+            <span
+              style={{
+                display: "block",
+                height: "1.5px",
+                width: menuOpen ? "16px" : "10px",
+                background: hamburgerColor, // Warna dinamis
+                borderRadius: "2px",
+                transformOrigin: "center",
+                transform: menuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none",
+                transition: "transform 0.3s ease, width 0.3s ease, background 0.3s ease",
+              }}
+            />
           </button>
         </div>
+
+        {/* Scroll Progress Bar */}
+        <div
+          id="js-scroll-progress"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        />
       </nav>
 
-      {/* ── Mobile Menu Overlay — di luar <nav> agar stacking context terpisah ── */}
+      {/* ── Mobile Menu Overlay ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -148,32 +207,39 @@ export default function Navbar() {
             style={{
               position: "fixed",
               inset: 0,
-              zIndex: 250,        // ← di bawah navbar (300) tapi di atas konten
+              zIndex: 250, 
               display: "flex",
               flexDirection: "column",
             }}
           >
-            {/* Backdrop */}
-            <div style={{
-              position: "absolute",
-              inset: 0,
-              background: "var(--bg-primary)",
-              backdropFilter: "blur(24px)",
-              WebkitBackdropFilter: "blur(24px)",
-            }} />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "rgba(15, 23, 42, 0.98)", 
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+              }}
+            />
 
-            {/* Content */}
-            <div style={{
-              position: "relative",
-              zIndex: 1,
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-              padding: "0 2rem 3rem",
-              paddingTop: "80px",  // tinggi navbar
-            }}>
-              {/* Nav Links */}
-              <nav style={{ display: "flex", flexDirection: "column", marginTop: "1.5rem" }}>
+            <div
+              style={{
+                position: "relative",
+                zIndex: 1,
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+                padding: "0 2rem 3rem",
+                paddingTop: "80px",
+              }}
+            >
+              <nav
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginTop: "1.5rem",
+                }}
+              >
                 {links.map((link, idx) => (
                   <motion.a
                     key={link.href}
@@ -185,48 +251,52 @@ export default function Navbar() {
                       duration: 0.35,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav(link.href);
+                    }}
                     style={{
                       display: "flex",
                       alignItems: "baseline",
                       gap: "0.6rem",
                       fontSize: "2.2rem",
-                      fontWeight: 700,
-                      fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-                      color: "var(--text-primary)",
+                      fontWeight: 400,
+                      fontFamily: "var(--font-playfair, 'DM Serif Display', serif)",
+                      color: "#ffffff", 
                       textDecoration: "none",
                       letterSpacing: "-0.02em",
                       lineHeight: 1.2,
                       padding: "0.85rem 0",
-                      borderBottom: "1px solid var(--border-subtle)",
+                      borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
                       opacity: 0.85,
                       transition: "opacity 0.2s ease, color 0.2s ease",
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.opacity = "1";
-                      (e.currentTarget as HTMLElement).style.color = "var(--accent-primary)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--accent-primary, #ff6e80)";
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.opacity = "0.85";
-                      (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
+                      (e.currentTarget as HTMLElement).style.color = "#ffffff";
                     }}
                     whileTap={{ scale: 0.97 }}
                   >
                     {link.label}
-                    <span style={{
-                      fontSize: "0.78rem",
-                      fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans', sans-serif)",
-                      fontWeight: 500,
-                      color: "var(--accent-primary)",
-                      letterSpacing: "0.04em",
-                    }}>
+                    <span
+                      style={{
+                        fontSize: "0.78rem",
+                        fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans', sans-serif)",
+                        fontWeight: 500,
+                        color: "var(--accent-primary, #ff6e80)",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
                       0{idx + 1}
                     </span>
                   </motion.a>
                 ))}
               </nav>
 
-              {/* Bottom CTA */}
               <motion.div
                 style={{ marginTop: "auto" }}
                 initial={{ opacity: 0, y: 16 }}
@@ -235,7 +305,10 @@ export default function Navbar() {
               >
                 <a
                   href="#contact"
-                  onClick={(e) => { e.preventDefault(); handleNav("#contact"); }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav("#contact");
+                  }}
                   className="btn-primary"
                   style={{
                     display: "flex",
@@ -251,17 +324,25 @@ export default function Navbar() {
                 >
                   Hubungi Saya
                   <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
-                    <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    <path
+                      d="M1 6h10M7 2l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </a>
 
-                <div style={{
-                  textAlign: "center",
-                  marginTop: "1.25rem",
-                  color: "var(--text-muted)",
-                  fontSize: "0.78rem",
-                  letterSpacing: "0.06em",
-                }}>
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginTop: "1.25rem",
+                    color: "rgba(255, 255, 255, 0.5)",
+                    fontSize: "0.78rem",
+                    letterSpacing: "0.06em",
+                  }}
+                >
                   annebillanasywa@gmail.com
                 </div>
               </motion.div>
@@ -273,7 +354,10 @@ export default function Navbar() {
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .navbar .btn-primary { display: none !important; }
+          .hamburger-mobile { display: flex !important; }
+        }
+        @media (min-width: 769px) {
+          .hamburger-mobile { display: none !important; }
         }
       `}</style>
     </>

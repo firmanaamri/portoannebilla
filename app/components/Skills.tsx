@@ -10,11 +10,8 @@ const skills = [
     borderColor: "rgba(255, 110, 128, 0.15)",
     items: [
       "Reportase & Liputan Berita",
-      "Penulisan Feature",
       "Copywriting",
       "Press Release",
-      "Editorial & Proofreading",
-      "Wawancara & Investigasi",
     ],
   },
   {
@@ -23,11 +20,9 @@ const skills = [
     color: "rgba(215, 168, 89, 0.07)",
     borderColor: "rgba(215, 168, 89, 0.15)",
     items: [
-      "Media Relations",
-      "Brand Storytelling",
+      "Stakeholder & Sponsorship",
       "Crisis Communication",
       "Event Management",
-      "Stakeholder Engagement",
       "Community Management",
     ],
   },
@@ -40,7 +35,7 @@ const skills = [
       "Content Strategy",
       "Social Media Management",
       "Photography & Videography",
-      "Video Editing (CapCut/Premiere)",
+      "Video Editing (CapCut)",
       "Desain Grafis (Canva)",
       "Podcast Produksi",
     ],
@@ -52,17 +47,16 @@ const skills = [
     borderColor: "rgba(255, 214, 145, 0.15)",
     items: [
       "Analisis Media Sosial",
-      "Riset Komunikasi",
       "Audience Insight",
       "Survey & Kuesioner",
       "SWOT Analysis",
-      "Reporting & Presentation",
+      "Conference & Presentation",
     ],
   },
 ];
 
 const tools = [
-  "Canva", "CapCut", "Notion",
+  "Canva", "CapCut",
   "Microsoft Office",
   "Instagram", "TikTok", "LinkedIn",
 ];

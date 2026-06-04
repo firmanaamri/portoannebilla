@@ -43,7 +43,7 @@ const education = {
   period: "2022 - 2026",
   concentration: "Public Relations",
   gpa: "3.72 / 4.00",
-  achievements: ["Beasiswa Prestasi Akademik"],
+  
 };
 
 export default function Experience() {
@@ -158,20 +158,6 @@ export default function Experience() {
                     {education.gpa}
                   </div>
                 </div>
-              </div>
-
-              <div>
-                <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.75rem" }}>
-                  Pencapaian
-                </div>
-                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                  {education.achievements.map((a) => (
-                    <li key={a} style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.85rem", color: "var(--text-secondary)" }}>
-                      <span style={{ color: "var(--accent-primary)", fontSize: "1rem" }}>✦</span>
-                      {a}
-                    </li>
-                  ))}
-                </ul>
               </div>
             </motion.div>
 
