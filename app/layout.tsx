@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
@@ -15,6 +15,13 @@ const playfair = Bricolage_Grotesque({
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#ffd691",
+};
 
 export const metadata: Metadata = {
   title: "Annebilla Nasywa | Public Relations & Media Social Specialist",

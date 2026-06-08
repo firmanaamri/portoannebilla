@@ -68,7 +68,7 @@ export default function Navbar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: scrolled ? "0.85rem 2rem" : "1.25rem 2rem",
+            padding: scrolled ? "calc(0.85rem + env(safe-area-inset-top, 0px)) 2rem 0.85rem" : "calc(1.25rem + env(safe-area-inset-top, 0px)) 2rem 1.25rem",
             transition: "padding 0.4s ease"
           }}
         >
@@ -230,7 +230,7 @@ export default function Navbar() {
                 flexDirection: "column",
                 height: "100%",
                 padding: "0 2rem 3rem",
-                paddingTop: "80px",
+                paddingTop: "calc(80px + env(safe-area-inset-top, 0px))",
               }}
             >
               <nav

@@ -53,6 +53,8 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   background-color: #ffd691 !important;
+  /* Safari safe-area support */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 body {
@@ -279,7 +281,8 @@ section {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.25rem 0;
+  /* Extra top padding for Safari notch / Dynamic Island */
+  padding: calc(1.25rem + env(safe-area-inset-top, 0px)) env(safe-area-inset-right, 0px) 0 env(safe-area-inset-left, 0px);
   /* Warna abu-abu sangat gelap dengan opasitas tinggi */
   background: rgba(30, 35, 40, 0.7); 
   backdrop-filter: blur(12px);
@@ -296,7 +299,7 @@ section {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  padding: 0.85rem 0;
+  padding: calc(0.85rem + env(safe-area-inset-top, 0px)) env(safe-area-inset-right, 0px) 0 env(safe-area-inset-left, 0px);
 }
 
 .nav-link {
@@ -831,14 +834,4 @@ section {
 .profile-ring {
   transition: transform 0.15s ease-out;
   will-change: transform;
-}
-
-/* ─── Scroll-reveal base (set by JS) ────────────── */
-[data-reveal] {
-  /* initial state applied by JS */
-}
-
-/* ─── Stagger child base ────────────────────────── */
-[data-stagger-child] {
-  /* initial state applied by JS */
 }

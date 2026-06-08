@@ -273,8 +273,8 @@ export default function Hero() {
                 }}
               >
                 <Image
-                  src="/my.jpeg"
-                  alt="Annebilla — Mahasiswa Ilmu Komunikasi"
+                  src="/photo/favourite.png"
+                  alt="Annebilla — Fresh Graduate Ilmu Komunikasi"
                   width={360}
                   height={360}
                   className="profile-img"
