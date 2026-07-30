@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const links = [
   { label: "Tentang", href: "#about" },
@@ -10,7 +11,11 @@ const links = [
   { label: "Kontak", href: "#contact" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  isProjectPage?: boolean;
+}
+
+export default function Navbar({ isProjectPage = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -34,9 +39,9 @@ export default function Navbar() {
     }, 300);
   };
 
-  // Logika penentu tema: akan gelap JIKA di-scroll ATAU menu mobile terbuka
-  const isDarkTheme = scrolled || menuOpen;
-  
+  // Logika penentu tema: selalu gelap di project page, atau jika di-scroll / menu mobile terbuka
+  const isDarkTheme = isProjectPage || scrolled || menuOpen;
+
   // Variabel warna dinamis
   const logoColor = isDarkTheme ? "#ffffff" : "var(--text-primary, #233a66)";
   const linkColor = isDarkTheme ? "rgba(255, 255, 255, 0.85)" : "var(--text-primary, #233a66)";
@@ -73,52 +78,91 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <a
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNav("#hero");
-            }}
-            style={{
-              fontSize: "1.3rem",
-              fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-              fontWeight: 700,
-              color: logoColor, // Warna dinamis
-              textDecoration: "none",
-              letterSpacing: "-0.02em",
-              transition: "color 0.4s ease",
-            }}
-          >
-            annebilla<span style={{ color: "var(--accent-primary, #ff6e80)" }}>.</span>
-          </a>
+          {isProjectPage ? (
+            <Link
+              href="/"
+              style={{
+                fontSize: "1.3rem",
+                fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
+                fontWeight: 700,
+                color: logoColor,
+                textDecoration: "none",
+                letterSpacing: "-0.02em",
+                transition: "color 0.4s ease",
+              }}
+            >
+              annebilla<span style={{ color: "var(--accent-primary, #ff6e80)" }}>.</span>
+            </Link>
+          ) : (
+            <a
+              href="#hero"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNav("#hero");
+              }}
+              style={{
+                fontSize: "1.3rem",
+                fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
+                fontWeight: 700,
+                color: logoColor,
+                textDecoration: "none",
+                letterSpacing: "-0.02em",
+                transition: "color 0.4s ease",
+              }}
+            >
+              annebilla<span style={{ color: "var(--accent-primary, #ff6e80)" }}>.</span>
+            </a>
+          )}
 
           {/* Desktop Links */}
           <div
             className="desktop-nav"
-            style={{ display: "flex", gap: "2.5rem", marginLeft: "auto" }}
+            style={{ display: "flex", gap: "2.5rem", marginLeft: "auto", alignItems: "center" }}
           >
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="nav-link"
+            {isProjectPage ? (
+              <Link
+                href="/#portfolio"
+                className="btn-outline"
                 style={{
-                  color: linkColor, // Warna dinamis
-                  fontWeight: 500,
-                  fontSize: "0.9rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.6rem 1.4rem",
+                  fontSize: "0.82rem",
                   textDecoration: "none",
-                  transition: "color 0.3s ease"
+                  borderColor: "rgba(255,255,255,0.25)",
+                  color: "rgba(255,255,255,0.9)",
                 }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNav(link.href);
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = linkHoverColor)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = linkColor)}
               >
-                {link.label}
-              </a>
-            ))}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Kembali ke Beranda
+              </Link>
+            ) : (
+              links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="nav-link"
+                  style={{
+                    color: linkColor,
+                    fontWeight: 500,
+                    fontSize: "0.9rem",
+                    textDecoration: "none",
+                    transition: "color 0.3s ease"
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(link.href);
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = linkHoverColor)}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = linkColor)}
+                >
+                  {link.label}
+                </a>
+              ))
+            )}
           </div>
 
           {/* Mobile Hamburger → ✕ */}
@@ -240,61 +284,91 @@ export default function Navbar() {
                   marginTop: "1.5rem",
                 }}
               >
-                {links.map((link, idx) => (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
+                {isProjectPage ? (
+                  <motion.div
                     initial={{ opacity: 0, x: -24 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: 0.05 + idx * 0.07,
-                      duration: 0.35,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNav(link.href);
-                    }}
+                    transition={{ delay: 0.1, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                     style={{
                       display: "flex",
-                      alignItems: "baseline",
+                      alignItems: "center",
                       gap: "0.6rem",
                       fontSize: "2.2rem",
                       fontWeight: 400,
                       fontFamily: "var(--font-playfair, 'DM Serif Display', serif)",
-                      color: "#ffffff", 
-                      textDecoration: "none",
+                      color: "#ffffff",
                       letterSpacing: "-0.02em",
                       lineHeight: 1.2,
                       padding: "0.85rem 0",
                       borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                      opacity: 0.85,
-                      transition: "opacity 0.2s ease, color 0.2s ease",
                     }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.opacity = "1";
-                      (e.currentTarget as HTMLElement).style.color = "var(--accent-primary, #ff6e80)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.opacity = "0.85";
-                      (e.currentTarget as HTMLElement).style.color = "#ffffff";
-                    }}
-                    whileTap={{ scale: 0.97 }}
                   >
-                    {link.label}
-                    <span
-                      style={{
-                        fontSize: "0.78rem",
-                        fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans', sans-serif)",
-                        fontWeight: 500,
-                        color: "var(--accent-primary, #ff6e80)",
-                        letterSpacing: "0.04em",
-                      }}
+                    <Link
+                      href="/#portfolio"
+                      onClick={() => setMenuOpen(false)}
+                      style={{ color: "inherit", textDecoration: "none" }}
                     >
-                      0{idx + 1}
-                    </span>
-                  </motion.a>
-                ))}
+                      Beranda
+                    </Link>
+                    <span style={{ fontSize: "0.78rem", fontFamily: "var(--font-jakarta)", fontWeight: 500, color: "var(--accent-primary, #ff6e80)", letterSpacing: "0.04em" }}>01</span>
+                  </motion.div>
+                ) : (
+                  links.map((link, idx) => (
+                    <motion.a
+                      key={link.href}
+                      href={link.href}
+                      initial={{ opacity: 0, x: -24 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: 0.05 + idx * 0.07,
+                        duration: 0.35,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNav(link.href);
+                      }}
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: "0.6rem",
+                        fontSize: "2.2rem",
+                        fontWeight: 400,
+                        fontFamily: "var(--font-playfair, 'DM Serif Display', serif)",
+                        color: "#ffffff",
+                        textDecoration: "none",
+                        letterSpacing: "-0.02em",
+                        lineHeight: 1.2,
+                        padding: "0.85rem 0",
+                        borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                        opacity: 0.85,
+                        transition: "opacity 0.2s ease, color 0.2s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.opacity = "1";
+                        (e.currentTarget as HTMLElement).style.color = "var(--accent-primary, #ff6e80)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.opacity = "0.85";
+                        (e.currentTarget as HTMLElement).style.color = "#ffffff";
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      {link.label}
+                      <span
+                        style={{
+                          fontSize: "0.78rem",
+                          fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans', sans-serif)",
+                          fontWeight: 500,
+                          color: "var(--accent-primary, #ff6e80)",
+                          letterSpacing: "0.04em",
+                        }}
+                      >
+                        0{idx + 1}
+                      </span>
+                    </motion.a>
+                  ))
+                )}
               </nav>
 
               <motion.div
@@ -303,36 +377,60 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35, duration: 0.35 }}
               >
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav("#contact");
-                  }}
-                  className="btn-primary"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.5rem",
-                    width: "100%",
-                    padding: "1rem",
-                    fontSize: "0.95rem",
-                    borderRadius: "99px",
-                    textDecoration: "none",
-                  }}
-                >
-                  Hubungi Saya
-                  <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
-                    <path
-                      d="M1 6h10M7 2l4 4-4 4"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
+                {isProjectPage ? (
+                  <Link
+                    href="/#portfolio"
+                    className="btn-primary"
+                    onClick={() => setMenuOpen(false)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.5rem",
+                      width: "100%",
+                      padding: "1rem",
+                      fontSize: "0.95rem",
+                      borderRadius: "99px",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Kembali ke Beranda
+                  </Link>
+                ) : (
+                  <a
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav("#contact");
+                    }}
+                    className="btn-primary"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.5rem",
+                      width: "100%",
+                      padding: "1rem",
+                      fontSize: "0.95rem",
+                      borderRadius: "99px",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Hubungi Saya
+                    <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
+                      <path
+                        d="M1 6h10M7 2l4 4-4 4"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </a>
+                )}
 
                 <div
                   style={{

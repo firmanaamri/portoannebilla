@@ -131,10 +131,10 @@ export default function Skills() {
           className="card"
           style={{ padding: "2rem" }}
         >
-          <h3 style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem", fontFamily: "inherit" }}>
+          <h3 style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.5rem", textAlign: "center", fontFamily: "inherit" }}>
             Tools & Platform
           </h3>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", justifyContent: "center" }}>
             {tools.map((tool, i) => (
               <motion.span
                 key={tool}

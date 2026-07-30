@@ -34,6 +34,11 @@ export const metadata: Metadata = {
     "portfolio",
     "mahasiswa komunikasi",
   ],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     title: "Annebilla Nasywa | Public Relations & Media Social Specialist",
     description:

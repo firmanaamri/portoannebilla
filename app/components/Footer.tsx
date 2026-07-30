@@ -5,39 +5,19 @@ export default function Footer() {
       position: "relative",
       zIndex: 1,
       borderTop: "1px solid var(--border-subtle)",
-      padding: "2.5rem 0",
+      padding: "2rem 0",
     }}>
       <div className="container" style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "center",
         flexWrap: "wrap",
-        gap: "1rem",
+        gap: "0.5rem",
       }}>
-        <div style={{
-          fontSize: "1.2rem",
-          fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-          fontWeight: 700,
-          color: "var(--accent-primary)",
-        }}>
-          annebilla<span style={{ color: "var(--accent-lavender)" }}>.</span>
-        </div>
-
-        <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
+        <div style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
           © {year} Annebilla · Communication Science
-        </p>
-
-        <div style={{ display: "flex", gap: "1.5rem" }}>
-          {["Instagram", "LinkedIn", "Email"].map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="footer-link"
-            >
-              {link}
-            </a>
-          ))}
         </div>
+        <div className="container" style={{fontSize: "0.8rem", display: "flex", justifyContent: "center", alignItems: "center", gap: "0.25rem", color: "var(--accent-primary)"}}>Build With Next.Js & Tailwind Css</div>
       </div>
 
       <style>{`

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import AnimationEngine from "../components/AnimationEngine";
+import Navbar from "../components/Navbar";
 import { useState, useEffect, useCallback } from "react";
 
 interface Project {
@@ -10,7 +10,7 @@ interface Project {
   title: string;
   category: string;
   categoryColor: string;
-  emoji: string;
+  emoji?: string;
   desc: string;
   details: string;
   tags: string[];
@@ -171,7 +171,7 @@ const projects: Project[] = [
     title: "Kampanye Attachment Style",
     category: "Campaign",
     categoryColor: "var(--accent-primary)",
-    emoji: "🌿",
+    
     desc: "Kampanye tentang attachment style",
     details: "Sebagai syarat tugas akhir dari mahasiswa ilmu komunikasi, bentuk implementasi dari tugas mata kuliah kampanye public relations yang dimana setiap minggu nya akan ada campaign dan di akhir semester akan ada penilaian, kampanye yang saya pilih yaitu attachment style, yang dimana setiap minggunya akan ada content berupa infografis, reel dan juga instagram stories. Attachment Style adalah kampanye yang bertujuan untuk meningkatkan kesadaran masyarakat tentang attachment style dan dampaknya terhadap hubungan interpersonal.",
     tags: ["Reportase", "Investigasi", "Feature Writing", "Infografis"],
@@ -179,7 +179,7 @@ const projects: Project[] = [
     mediaType: "image",
     mediaUrl: "/photo/kampanye.jpg",
     mediaUrls: ["/photo/kampanye.jpg", "/photo/kampanye2.png"],
-    impact: "📈 5.000+ Pembaca Aktif",
+    
     projectUrl: "https://www.instagram.com/ruanggema.soc?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   },
   {
@@ -187,14 +187,14 @@ const projects: Project[] = [
     title: "Internship at DPMPTSP Karanganyar",
     category: "Content Creator",
     categoryColor: "var(--accent-rose)",
-    emoji: "🗣️",
+    
     desc: "Merancang dan mengelola akun media social DPMPTSP Kabupaten Karanganyar",
     details: "Sebagai mahasiswa magang di Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP) Kabupaten Karanganyar, saya bertanggung jawab penuh dalam pengelolaan seluruh kanal media sosial resmi lembaga, termasuk Instagram, TikTok, dan Facebook.\n\nTugas utama mencakup pembuatan konten harian (Infografis Edukasi, Reels Interaktif, Story Teaser), perencanaan kalender konten, serta analisis performa mingguan. Saya juga berkesempatan memimpin dokumentasi video untuk acara publik berskala besar seperti Investor Gathering dan Soft Launching Mall Pelayanan Publik.",
     tags: ["Content Strategy", "Content Writing", "Video Production", "Analytics"],
     bg: "linear-gradient(135deg, rgba(215,168,89,0.1) 0%, rgba(215,168,89,0.2) 100%)",
     mediaType: "video",
     mediaUrl: "/video/dpm.mp4",
-    impact: "📱 50.000+ Jangkauan Organik",
+    
     projectUrl: "https://www.instagram.com/reel/DJ_ysd-Pvzv/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
   },
   {
@@ -202,14 +202,13 @@ const projects: Project[] = [
     title: "Internship Media Social Specialist at Humas UMS",
     category: "Media Social Specialist",
     categoryColor: "#233A66",
-    emoji: "🎓",
+    
     desc: "Bertanggung jawab atas publikasi konten press release dan hubungan dengan media lokal untuk acara-acara besar kampus.",
     details: "Selama memegang dan mengelola akun media sosial Universitas Muhammadiyah Surakarta (UMS), saya bertanggung jawab penuh atas seluruh siklus produksi konten pemasaran lembaga. Peran ini menuntut saya untuk aktif mulai dari merancang ide kreatif, hingga terjun langsung sebagai talent dalam eksekusi pembuatan konten promosi. Selain itu, saya juga secara rutin menganalisis dan mengevaluasi performa konten yang telah dipublikasikan sebagai landasan untuk menyusun strategi perbaikan pada kampanye berikutnya.",
     tags: ["Content Strategy", "Content Writing", "Video Production", "Analytics"],
     bg: "linear-gradient(135deg, rgba(35,58,102,0.1) 0%, rgba(35,58,102,0.2) 100%)",
     mediaType: "video",
     mediaUrl: "/video/mas.mp4",
-    impact: "📰 Branding Social Media",
     projectUrl: "https://www.instagram.com/reel/DNFoJrcyN7k/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
   },
   {
@@ -217,7 +216,7 @@ const projects: Project[] = [
     title: "Artikel Liputan Kampanye 'Attachment Style' di Kompasiana",
     category: "Journalistic",
     categoryColor: "#D7A859",
-    emoji: "📝",
+    
     desc: "Menulis artikel jurnalistik bergaya feature yang membedah isu psikologi hubungan dan keterikatan emosional di portal media online Kompasiana.",
     details: "Menyusun artikel liputan komprehensif mengenai kampanye edukasi 'Attachment Talk' yang diselenggarakan di Car Free Day (CFD) Surakarta. Tulisan ini tidak sekadar melaporkan jalannya acara, melainkan mengemas narasi psikologi—seperti tipe attachment secure, avoidant, anxious, dan disorganized—menjadi bacaan populer yang mudah dipahami oleh pembaca awam.\n\nKeberhasilan utama dari penulisan artikel ini adalah kemampuan mengambil angle berita yang unik, yaitu memadukan teori psikologi modern dengan nilai-nilai komunikasi Islam (Hablumminannas dan Hablumminallah), serta diperkuat dengan kutipan observasi dari Psikolog ahli. Proyek ini membuktikan kemampuan saya dalam copywriting, riset jurnalisme dasar, serta adaptasi gaya penulisan untuk platform user-generated content (UGC) media nasional.",
     tags: ["Journalism", "Copywriting", "Feature Writing", "Media Online"],
@@ -225,7 +224,6 @@ const projects: Project[] = [
     mediaType: "image",
     mediaUrl: "/photo/kompas.png",
     mediaUrls:['/photo/kompas.png'],
-    impact: "📰 Dipublikasikan di Kompasiana",
     projectUrl: "https://www.kompasiana.com/roseliapuspita7510/69452f19ed6415364a1736d2/mahasiswa-ums-bangun-kesadaran-diri-pada-generasi-muda-melalui-kampanye-attachment-style",
   },
   
@@ -242,44 +240,8 @@ export default function ProjectsPage() {
       <div className="orb orb-2" aria-hidden="true" />
       <div className="orb orb-3" aria-hidden="true" />
 
-      {/* Minimalist Top Navbar */}
-      <header
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          background: "rgba(255, 214, 145, 0.92)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderBottom: "1px solid var(--border-subtle)",
-          padding: "1.25rem 0",
-          zIndex: 100,
-        }}
-      >
-        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <Link
-            href="/"
-            style={{
-              fontSize: "1.3rem",
-              fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-              fontWeight: 700,
-              color: "var(--accent-primary)",
-              textDecoration: "none",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            annebilla<span style={{ color: "var(--accent-lavender)" }}>.</span>
-          </Link>
-
-          <Link href="/" className="btn-outline" style={{ padding: "0.6rem 1.4rem", fontSize: "0.82rem", gap: "0.4rem" }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Kembali ke Beranda
-          </Link>
-        </div>
-      </header>
+      {/* Shared Navbar — same as homepage */}
+      <Navbar isProjectPage />
 
       {/* Main Showcase Layout */}
       <main style={{ paddingTop: "8rem", paddingBottom: "6rem" }}>
@@ -360,9 +322,11 @@ export default function ProjectsPage() {
                       ) : (
                         <video
                           src={project.mediaUrl}
-                          controls
+                          autoPlay
+                          muted
+                          loop
                           playsInline
-                          preload="none"
+                          preload="auto"
                           style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
                       )
