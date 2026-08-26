@@ -226,7 +226,21 @@ const projects: Project[] = [
     mediaUrls:['/photo/kompas.png'],
     projectUrl: "https://www.kompasiana.com/roseliapuspita7510/69452f19ed6415364a1736d2/mahasiswa-ums-bangun-kesadaran-diri-pada-generasi-muda-melalui-kampanye-attachment-style",
   },
-  
+
+  {
+    id: "proj-5",
+    title: "Content Creator at Lima Studio",
+    category: "Content Creator",
+    categoryColor: "var(--accent-primary)",
+    desc: "Memproduksi dan editing video untuk konten pemasaran",
+    details: "Sebagai content creator di Lima Studio, saya bertanggung jawab untuk memproduksi dan mengedit konten video untuk berbagai kebutuhan promosi. Konten yang saya produksi meliputi video reels, dan video untuk media sosial lainnya. Saya juga bertanggung jawab untuk mengedit video sesuai dengan kebutuhan klien. Selain itu, saya juga menjadi host live untuk memasarkan produk klien, mulai dari produk FnB dan obat-obatan.",
+    tags: ["Content Creation", "Video Editing", "Host Live", "Click Up"],
+    bg: "linear-gradient(135deg, rgba(255,140,60,0.12) 0%, rgba(255,140,60,0.22) 100%)",
+    mediaType: "image",
+    mediaUrl: "/photo/lima.png",
+    mediaUrls:['/photo/lima.png'],
+    projectUrl: "",
+  },
 ];
 
 export default function ProjectsPage() {
