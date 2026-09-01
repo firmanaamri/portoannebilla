@@ -1,6 +1,9 @@
 "use client";
 
+import { CSSProperties, FormEvent, useState } from "react";
 import { motion, Variants } from "framer-motion";
+
+const CONTACT_EMAIL = "annebillanasywa@gmail.com";
 
 const contacts = [
   {
@@ -66,6 +69,11 @@ const contacts = [
 ];
 
 export default function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
   const containerVariants: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.1 } },
@@ -79,6 +87,20 @@ export default function Contact() {
     },
   };
 
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const topic = subject.trim() || `Pesan dari ${name.trim()}`;
+    const body = [
+      `Nama: ${name.trim()}`,
+      `Email: ${email.trim()}`,
+      "",
+      message.trim(),
+    ].join("\n");
+
+    const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(topic)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  }
+
   return (
     <section id="contact" className="theme-navy" style={{ position: "relative", overflow: "hidden" }}>
       <div className="container">
@@ -87,7 +109,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: "center", marginBottom: "4rem" }}
+          style={{ textAlign: "center", marginBottom: "2.75rem" }}
         >
           <div className="section-label" style={{ justifyContent: "center" }}>Kontak</div>
           <h2 className="section-title">Mari Terhubung</h2>
@@ -96,112 +118,318 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "center" }} className="contact-grid">
-          {/* Left — Quote & CTA */}
+        <div className="contact-layout">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            className="card contact-panel contact-form-card"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ type: "spring", stiffness: 80, damping: 15 }}
+            transition={{ type: "spring", stiffness: 80, damping: 16 }}
           >
-            <motion.div
-              className="card"
-              style={{
-                padding: "2.5rem",
-                background: "linear-gradient(135deg, rgba(255,110,128,0.05), rgba(215,168,89,0.04))",
-                borderColor: "rgba(255,110,128,0.15)",
-                marginBottom: "1.5rem",
-              }}
-              whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(255, 110, 128, 0.1)" }}
-            >
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>&ldquo;</div>
-              <p style={{
-                fontSize: "1.2rem",
-                fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
-                color: "var(--text-primary)", lineHeight: 1.7, fontStyle: "italic", marginBottom: "1.5rem",
-              }}>
-                Komunikasi bukan sekadar bicara — ini tentang menghubungkan hati, membangun kepercayaan, dan menciptakan perubahan.
+            <div className="contact-panel-head">
+              <span className="contact-kicker">Email</span>
+              <h3 className="contact-panel-title">Kirim Pesan</h3>
+              <p className="contact-panel-copy">
+                Formulir ini membuka aplikasi email kamu, siap dikirim ke {CONTACT_EMAIL}.
               </p>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <div style={{
-                  width: 32, height: 32, borderRadius: "50%",
-                  background: "linear-gradient(135deg, var(--accent-primary), var(--accent-lavender))",
-                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem",
-                }}>
-                  ✨
+            </div>
+
+            <form onSubmit={handleSubmit} className="contact-form">
+              <div className="contact-form-row">
+                <div className="contact-field-wrap">
+                  <label htmlFor="contact-name">Nama</label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    required
+                    autoComplete="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Nama lengkap"
+                    className="contact-field"
+                  />
                 </div>
-                <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>Annebilla Nasywa Hamimmah</span>
+                <div className="contact-field-wrap">
+                  <label htmlFor="contact-email-field">Email</label>
+                  <input
+                    id="contact-email-field"
+                    name="email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="email@contoh.com"
+                    className="contact-field"
+                  />
+                </div>
               </div>
-            </motion.div>
+              <div className="contact-field-wrap">
+                <label htmlFor="contact-subject">Subjek</label>
+                <input
+                  id="contact-subject"
+                  name="subject"
+                  type="text"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  placeholder="Kolaborasi, magang, atau topik lain"
+                  className="contact-field"
+                />
+              </div>
+              <div className="contact-field-wrap">
+                <label htmlFor="contact-message">Pesan</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Tulis pesanmu di sini…"
+                  className="contact-field contact-textarea"
+                />
+              </div>
+              <button type="submit" className="btn-primary contact-submit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                </svg>
+                Kirim via Email
+              </button>
+            </form>
+          </motion.div>
+
+          <motion.aside
+            className="card contact-panel contact-aside"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <div className="contact-panel-head">
+              <span className="contact-kicker">Kanal</span>
+              <h3 className="contact-panel-title">Temui Saya</h3>
+              <p className="contact-panel-copy">
+                Pilih kanal yang paling nyaman — respon paling cepat lewat WhatsApp atau email.
+              </p>
+            </div>
+
+            <div className="contact-channels">
+              {contacts.map((c) => (
+                <motion.a
+                  key={c.id}
+                  id={c.id}
+                  variants={linkVariants}
+                  href={c.href}
+                  className="contact-channel"
+                  title={c.value}
+                  target={c.href.startsWith("http") ? "_blank" : undefined}
+                  rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  style={{ "--channel-color": c.color, "--channel-bg": c.bg, "--channel-border": c.border } as CSSProperties}
+                >
+                  <span className="contact-channel-icon">{c.icon}</span>
+                  <span className="contact-channel-label">{c.label}</span>
+                  <span className="contact-channel-value">{c.value}</span>
+                  <span className="contact-channel-desc">{c.desc}</span>
+                </motion.a>
+              ))}
+            </div>
 
             <motion.a
               id="contact-cv-download"
               href="/AnnebillaNasywaHamimmah_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary"
-              style={{ width: "100%", justifyContent: "center" }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
+              className="btn-outline contact-resume"
+              variants={linkVariants}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
               </svg>
               Lihat Resume
             </motion.a>
-          </motion.div>
-
-          {/* Right — Contact Links */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-          >
-            {contacts.map((c) => (
-              <motion.a
-                key={c.id}
-                id={c.id}
-                variants={linkVariants}
-                href={c.href}
-                className="contact-link"
-                target={c.href.startsWith("http") ? "_blank" : undefined}
-                rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                whileHover={{ x: 8, backgroundColor: c.bg, borderColor: c.color }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              >
-                <div style={{
-                  width: 48, height: 48, borderRadius: "12px",
-                  background: c.bg, border: `1px solid ${c.border}`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: c.color, flexShrink: 0,
-                }}>
-                  {c.icon}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: "0.72rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-                    {c.label}
-                  </div>
-                  <div style={{ fontWeight: 600, color: "var(--text-primary)", fontSize: "0.9rem" }}>
-                    {c.value}
-                  </div>
-                  <div style={{ fontSize: "0.78rem", color: "var(--text-secondary)" }}>
-                    {c.desc}
-                  </div>
-                </div>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "var(--text-muted)", flexShrink: 0 }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </motion.a>
-            ))}
-          </motion.div>
+          </motion.aside>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .contact-grid { grid-template-columns: 1fr !important; }
+        .contact-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+          gap: 1.5rem;
+          align-items: stretch;
+        }
+        .contact-panel {
+          display: flex;
+          flex-direction: column;
+          padding: 1.75rem 1.85rem 1.85rem;
+          background: linear-gradient(160deg, rgba(255,110,128,0.07), rgba(215,168,89,0.03) 55%, rgba(255,255,255,0.02));
+          border-color: rgba(255,110,128,0.14);
+          min-height: 100%;
+        }
+        .contact-form-card:hover,
+        .contact-aside:hover {
+          transform: none !important;
+        }
+        .contact-panel-head {
+          margin-bottom: 1.35rem;
+        }
+        .contact-kicker {
+          display: inline-block;
+          font-size: 0.68rem;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: var(--accent-primary);
+          margin-bottom: 0.45rem;
+        }
+        .contact-panel-title {
+          font-family: var(--font-playfair, "Playfair Display", serif);
+          font-size: 1.45rem;
+          font-weight: 600;
+          color: var(--text-primary);
+          line-height: 1.25;
+          margin: 0 0 0.4rem;
+        }
+        .contact-panel-copy {
+          font-size: 0.84rem;
+          color: var(--text-secondary);
+          line-height: 1.65;
+          margin: 0;
+        }
+        .contact-form {
+          display: flex;
+          flex-direction: column;
+          gap: 0.9rem;
+          flex: 1;
+        }
+        .contact-form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.9rem;
+        }
+        .contact-field-wrap label {
+          display: block;
+          font-size: 0.68rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--text-muted);
+          margin-bottom: 0.4rem;
+        }
+        .contact-field {
+          width: 100%;
+          padding: 0.78rem 0.95rem;
+          border-radius: 12px;
+          border: 1px solid var(--border);
+          background: rgba(255, 255, 255, 0.04);
+          color: var(--text-primary);
+          font-size: 0.9rem;
+          font-family: inherit;
+          outline: none;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .contact-textarea {
+          resize: vertical;
+          min-height: 108px;
+          line-height: 1.65;
+        }
+        .contact-field::placeholder {
+          color: var(--text-muted);
+          opacity: 0.75;
+        }
+        .contact-field:focus {
+          border-color: var(--accent-primary);
+          box-shadow: 0 0 0 3px rgba(255, 110, 128, 0.16);
+        }
+        .contact-submit {
+          width: 100%;
+          justify-content: center;
+          margin-top: 0.25rem;
+        }
+        .contact-aside {
+          gap: 0;
+        }
+        .contact-channels {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+          flex: 1;
+        }
+        .contact-channel {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.28rem;
+          padding: 1rem 1rem 1.05rem;
+          border-radius: 14px;
+          text-decoration: none;
+          color: var(--text-primary);
+          background: var(--channel-bg, rgba(255,255,255,0.03));
+          border: 1px solid var(--channel-border, var(--border-subtle));
+          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+          min-width: 0;
+        }
+        .contact-channel:hover {
+          transform: translateY(-3px);
+          border-color: var(--channel-color);
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+        .contact-channel-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--channel-color);
+          background: rgba(255, 255, 255, 0.04);
+          margin-bottom: 0.35rem;
+        }
+        .contact-channel-icon svg {
+          width: 18px;
+          height: 18px;
+        }
+        .contact-channel-label {
+          font-size: 0.64rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--text-muted);
+        }
+        .contact-channel-value {
+          font-size: 0.82rem;
+          font-weight: 600;
+          line-height: 1.35;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 100%;
+        }
+        .contact-channel-desc {
+          font-size: 0.72rem;
+          color: var(--text-secondary);
+          line-height: 1.4;
+        }
+        .contact-resume {
+          width: 100%;
+          justify-content: center;
+          margin-top: 1rem;
+          text-decoration: none;
+        }
+        @media (max-width: 900px) {
+          .contact-layout {
+            grid-template-columns: 1fr;
+          }
+        }
+        @media (max-width: 560px) {
+          .contact-form-row,
+          .contact-channels {
+            grid-template-columns: 1fr;
+          }
+          .contact-panel {
+            padding: 1.4rem 1.25rem 1.5rem;
+          }
         }
       `}</style>
     </section>
