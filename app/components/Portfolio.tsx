@@ -68,7 +68,6 @@ const projects: Project[] = [
     desc: "Memproduksi dan mengedit konten video promosi, reels, serta menjadi host live selling untuk produk klien.",
     tags: ["Content Creation", "Video Editing", "Host Live", "Click Up"],
     bg: "linear-gradient(135deg, rgba(255,140,60,0.12) 0%, rgba(255,140,60,0.22) 100%)",
-    featured: true,
   },
   {
     id: "proj-6",
@@ -79,7 +78,6 @@ const projects: Project[] = [
     desc: "Kumpulan video penampilan sebagai talent, live host streaming, dan presenter video promosi.",
     tags: ["On-Camera Talent", "Live Host", "Public Speaking", "Brand Presenter"],
     bg: "linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(255, 110, 128, 0.18) 100%)",
-    featured: true,
   },
 ];
 
@@ -125,7 +123,7 @@ export default function Portfolio() {
           viewport={{ once: true, margin: "-100px" }}
           style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem", marginBottom: "4rem" }}
         >
-          {projects.filter(project => project.featured).map((project) => (
+          {projects.filter(project => project.featured).slice(0, 3).map((project) => (
             <Link key={project.id} href={`/projects#${project.id}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
               <motion.div
                 variants={cardVariants}

@@ -724,6 +724,13 @@ const projects: Project[] = [
         desc: "Penyampaian value produk ringkas dan visual storytelling.",
         creator: "@lima.studio",
       },
+      {
+        url: "/video/lima4.mp4",
+        title: "Reels 04: Edukasi",
+        tag: "Content Marketing",
+        desc: "Penyampaian value produk ringkas dan visual storytelling.",
+        creator: "@lima.studio",
+      },
     ],
     projectUrl: "",
   },

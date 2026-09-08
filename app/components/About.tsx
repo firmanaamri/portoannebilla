@@ -179,8 +179,7 @@ export default function About() {
               src="/photo/aww.jpeg"
               alt="Annebilla Nasywa"
               fill
-              priority
-              sizes="50vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
               style={{
                 objectFit: "cover",
                 objectPosition: "center top",
@@ -191,10 +190,12 @@ export default function About() {
 
           {/* Mobile image — hidden di desktop via CSS, tampil full */}
           <div className="photo-mobile">
-            <img
+            <Image
               src="/photo/aww.jpeg"
               alt="Annebilla Nasywa"
-              loading="eager"
+              width={720}
+              height={960}
+              sizes="100vw"
               style={{
                 width: "100%",
                 height: "auto",

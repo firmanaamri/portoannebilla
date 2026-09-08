@@ -279,6 +279,7 @@ export default function Hero() {
                   height={360}
                   className="profile-img"
                   priority
+                  sizes="(max-width: 480px) 220px, (max-width: 768px) 280px, 360px"
                   style={{
                     objectFit: "cover",
                     borderRadius: "50%",

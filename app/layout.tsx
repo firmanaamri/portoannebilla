@@ -57,8 +57,9 @@ export default function RootLayout({
       lang="id"
       className={`${jakarta.variable} ${playfair.variable}`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
-      <body className="noise">{children}</body>
+      <body className="noise" suppressHydrationWarning>{children}</body>
     </html>
   );
 }
