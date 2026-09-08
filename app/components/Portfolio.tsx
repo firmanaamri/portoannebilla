@@ -59,6 +59,28 @@ const projects: Project[] = [
     tags: ["Journalism", "Copywriting", "Feature Writing", "Media Online"],
     bg: "linear-gradient(135deg, rgba(215,168,89,0.1) 0%, rgba(215,168,89,0.2) 100%)",
   },
+  {
+    id: "proj-5",
+    title: "Content Creator at Lima Studio",
+    category: "Content Creator",
+    categoryColor: "var(--accent-primary)",
+    emoji: "🎬",
+    desc: "Memproduksi dan mengedit konten video promosi, reels, serta menjadi host live selling untuk produk klien.",
+    tags: ["Content Creation", "Video Editing", "Host Live", "Click Up"],
+    bg: "linear-gradient(135deg, rgba(255,140,60,0.12) 0%, rgba(255,140,60,0.22) 100%)",
+    featured: true,
+  },
+  {
+    id: "proj-6",
+    title: "On-Camera Talent & Host Showreel",
+    category: "Talent & Host",
+    categoryColor: "#8B5CF6",
+    emoji: "🎙️",
+    desc: "Kumpulan video penampilan sebagai talent, live host streaming, dan presenter video promosi.",
+    tags: ["On-Camera Talent", "Live Host", "Public Speaking", "Brand Presenter"],
+    bg: "linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(255, 110, 128, 0.18) 100%)",
+    featured: true,
+  },
 ];
 
 export default function Portfolio() {
